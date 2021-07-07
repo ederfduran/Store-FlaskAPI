@@ -17,7 +17,8 @@ class Item(Resource):
         "store_id", type=int, required=True, help=BLANK_ERROR.format("store_id")
     )
 
-    def get(self, name:str):
+    @classmethod
+    def get(cls, name:str):
         item = ItemModel.find_by_name(name)
         if item:
             return item.json(), 200
@@ -26,8 +27,9 @@ class Item(Resource):
     # highly sensitive endpoint as it require a fresh JWT
     # cannot be a JWT generated via the Token Refresh functionality.
     # A fresh token is the most secure token since it means the user just authenticated
+    @classmethod
     @jwt_required(fresh=True)
-    def post(self, name:str):
+    def post(cls, name:str):
         if ItemModel.find_by_name(name):
             return {"message": NAME_ALREADY_EXISTS.format(name)}, 400
         # Retrieves method payload
@@ -46,7 +48,8 @@ class Item(Resource):
     #  JWT must have a claim stating that is_admin is True
     #  Claims are arbitrary pieces of data that can be included 
     #  in the JWT when it is created
-    @jwt_required
+    @classmethod
+    @jwt_required()
     def delete(self, name:str):
         item = ItemModel.find_by_name(name)
         if item:
@@ -54,7 +57,8 @@ class Item(Resource):
             return {"message": ITEM_DELETED}, 200
         return {"message": ITEM_NOT_FOUND}, 404
 
-    def put(self, name:str):
+    @classmethod
+    def put(cls, name:str):
         data = Item.parser.parse_args()
 
         item = ItemModel.find_by_name(name)
@@ -72,7 +76,8 @@ class Item(Resource):
 class ItemList(Resource):
     # optional can be very handy if you want loggedd-out users 
     # to be able to see some data, but allow logged-in users see more data
-    def get(self):
+    @classmethod
+    def get(cls):
         items = [item.json() for item in ItemModel.find_all()]
         return {"items": items}, 200
     

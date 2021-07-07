@@ -72,7 +72,7 @@ class UserLogin(Resource):
 
 
 class UserLogout(Resource):
-    @jwt_required
+    @jwt_required()
     def post(self):
         jti = get_jwt()["jti"]  # jti is "JWT ID", a unique identifier for a JWT.
         user_id = get_jwt_identity()

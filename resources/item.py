@@ -16,7 +16,7 @@ class Item(Resource):
         "store_id", type=int, required=True, help="Every item needs a store_id."
     )
 
-    @jwt_required  
+    @jwt_required()  
     def get(self, name):
         item = ItemModel.find_by_name(name)
         if item:
@@ -49,7 +49,7 @@ class Item(Resource):
     #  JWT must have a claim stating that is_admin is True
     #  Claims are arbitrary pieces of data that can be included 
     #  in the JWT when it is created
-    @jwt_required
+    @jwt_required()
     def delete(self, name):
         claims = get_jwt()
         if not claims["is_admin"]:

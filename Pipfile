@@ -9,6 +9,7 @@ Flask-JWT-Extended = "*"
 Flask-RESTful = "*"
 Flask-SQLAlchemy = "*"
 mysql-connector-python = "*"
+marshmallow = "*"
 
 [dev-packages]
 

@@ -10,6 +10,8 @@ Flask-RESTful = "*"
 Flask-SQLAlchemy = "*"
 mysql-connector-python = "*"
 marshmallow = "*"
+flask-marshmallow = "*"
+marshmallow-sqlalchemy = "*"
 
 [dev-packages]
 

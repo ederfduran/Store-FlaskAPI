@@ -5,8 +5,7 @@ from flask_jwt_extended import JWTManager
 from db import db
 from blacklist import BLACKLIST
 from resources.user import UserRegister, UserLogin, User, TokenRefresh, UserLogout
-from resources.item import Item, ItemList
-from resources.store import Store, StoreList
+
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = 'mysql+mysqlconnector://{user}:{password}@{server}/{database}'.format(user='root', password='rootpassword', server='localhost', database='flask_examples')
@@ -43,13 +42,7 @@ def check_if_token_in_blocklist(jwt_header, jwt_payload):
     )  # Here we blacklist particular JWTs that have been created in the past.
 
 
-# All methods implemented in Store resource under 
-# this path must receive name as parameter ,
-# same thing for other resources
-api.add_resource(Store, "/store/<string:name>")
-api.add_resource(StoreList, "/stores")
-api.add_resource(Item, "/item/<string:name>")
-api.add_resource(ItemList, "/items")
+
 api.add_resource(UserRegister, "/register")
 api.add_resource(User, "/user/<int:user_id>")
 api.add_resource(UserLogin, "/login")
